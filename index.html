@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>  
+  <head>
+  <title>On the Edge of Reality</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="gesture-detector.js"></script>
+  <script src="gesture-handler.js"></script>
+  <script>
+window.onload = () => {
+    const button = document.querySelector('button[data-action="change"]')
+    button.innerText = '?';
+    button.addEventListener("click", function(){
+    console.log("Button wurde geklickt!");
+    alert("This could be some more information about the virtual puppet. You can also try to scale and rotate it using either one or two fingers");
+    });
+
+    const div = document.querySelector('.instructions');
+    div.innerText = "this is also some more text about the puppet which might be adjusted";
+};
+
+
+  </script>
+</head>
+
+<body>
+
+  <div class="centered instructions"></div>
+
+    <a-scene 
+    embedded 
+    arjs
+    renderer="logarithmicDepthBuffer: true;"
+    vr-mode-ui="enabled: false"
+    gesture-detector
+    id="scene"
+    >
+    <a-assets>
+      <a-asset-item
+        id="puppet1"
+        src="whale_v1.glb"
+      >
+      </a-asset-item>
+    </a-assets>
+
+
+    <a-marker
+    preset="hiro"
+    raycaster="objects: .clickable"
+    emitevents="true"
+    cursor="fuse: false; rayOrigin: mouse;"
+    id="markerA"
+  >
+    <a-entity
+      id="puppet1-model"
+      gltf-model="#puppet1"
+      position="0 0 0"
+      scale="0.1 0.1 0.1"
+      class="clickable"
+      gesture-handler
+    >
+    </a-entity>
+  </a-marker>
+  <a-entity camera></a-entity>
+</a-scene>
+
+<div class="centered">
+  <button id="info" data-action="change"></button>
+</div>
+
+
+</body>
+</html>
